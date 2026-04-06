@@ -5,7 +5,7 @@ import pandas as pd
 
 def market_data():
     # Địa chỉ chứa dữ liệu cần phân tích
-    url = "https://jsonplaceholder.typicode.com/posts/"
+    url = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false"
 
     try:
         # --- BƯỚC 1: LẤY DỮ LIỆU (EXTRACT) ---
@@ -35,11 +35,28 @@ def market_data():
 
             # 2. Trích xuất thông tin: Chỉ lấy các cột quan trọng
             # Thay vì dùng vòng lặp, ta chỉ định danh sách cột muốn giữ lại
-            df_final = df[['id', 'title', 'body']]
+            df_final = df[['id', 'symbol', 'current_price', 'market_cap', 'price_change_percentage_24h']]
 
-            # 3. Hiển thị thử 5 dòng đầu tiên để kiểm tra (Thay cho vòng lặp for)
-            print("\n--- 5 dòng đầu tiên xử lý bằng Pandas ---")
-            print(df_final.head()) 
+            # Chuyển tên thuộc tính tương ứng với dữ liệu
+            mapping = {
+                'id': 'mã',
+                'symbol': 'ký hiệu',
+                'current_price': 'giá hiện tại',
+                'market_cap': 'vốn hóa thị trường',
+                'price_change_percentage_24h': '% Thay đổi trong 24h'
+            }
+
+            df_final = df_final.rename(columns=mapping)
+
+            # Tạo thêm cột Nhóm vốn hóa:
+            bins = [0, 10_000_000_000, 100_000_000_000, float('inf')]
+            labels = ['Small-cap (<10B)', 'Mid-cap (10-100B)', 'Large-cap (>100B)']
+
+            df_final['nhóm vốn hóa'] = pd.cut(df_final['vốn hóa thị trường'], bins=bins, labels=labels)
+
+            # In ra 
+            print(df_final[['mã', 'ký hiệu', 'vốn hóa thị trường', 'nhóm vốn hóa']].head())
+
 
             # 4. Lưu kết quả ra file CSV (Bước Load trong DE)
             # index=False để không lưu cột số thứ tự mặc định của Pandas
