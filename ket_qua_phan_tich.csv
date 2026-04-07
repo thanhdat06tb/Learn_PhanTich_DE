@@ -1,11 +1,11 @@
-﻿mã,ký hiệu,giá hiện tại,vốn hóa thị trường,% Thay đổi trong 24h,nhóm vốn hóa
-bitcoin,btc,69778.0,1396420781663,3.51743,Large-cap (>100B)
-ethereum,eth,2142.37,258565730284,3.78444,Large-cap (>100B)
-tether,usdt,1.0,184154631216,0.02856,Large-cap (>100B)
-binancecoin,bnb,606.27,82679870793,2.2133,Mid-cap (10-100B)
-ripple,xrp,1.34,82377315119,2.97562,Mid-cap (10-100B)
-usd-coin,usdc,0.999906,77733337541,-0.0363,Mid-cap (10-100B)
-solana,sol,82.03,47030342189,2.54685,Mid-cap (10-100B)
-tron,trx,0.316014,29949322903,-1.1154,Mid-cap (10-100B)
-figure-heloc,figr_heloc,1.02,16797030859,-1.56095,Mid-cap (10-100B)
-dogecoin,doge,0.092113,14159652657,1.76524,Mid-cap (10-100B)
+﻿,ký hiệu,Tên,vốn hóa thị trường
+0,btc,Bitcoin,1383946488544
+1,eth,Ethereum,256813632681
+2,usdt,Tether,184152687706
+3,bnb,BNB,82557748421
+4,xrp,XRP,81120891287
+5,usdc,USDC,77865112475
+6,sol,Solana,46144655235
+7,trx,TRON,29881141844
+8,figr_heloc,Figure Heloc,16784883320
+9,doge,Dogecoin,14044161539

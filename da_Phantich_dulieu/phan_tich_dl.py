@@ -35,12 +35,13 @@ def market_data():
 
             # 2. Trích xuất thông tin: Chỉ lấy các cột quan trọng
             # Thay vì dùng vòng lặp, ta chỉ định danh sách cột muốn giữ lại
-            df_final = df[['id', 'symbol', 'current_price', 'market_cap', 'price_change_percentage_24h']]
+            df_final = df[['id', 'symbol', 'name', 'current_price', 'market_cap', 'price_change_percentage_24h']]
 
             # Chuyển tên thuộc tính tương ứng với dữ liệu
             mapping = {
                 'id': 'mã',
                 'symbol': 'ký hiệu',
+                'name' : 'Tên',
                 'current_price': 'giá hiện tại',
                 'market_cap': 'vốn hóa thị trường',
                 'price_change_percentage_24h': '% Thay đổi trong 24h'
@@ -54,13 +55,24 @@ def market_data():
 
             df_final['nhóm vốn hóa'] = pd.cut(df_final['vốn hóa thị trường'], bins=bins, labels=labels)
 
-            # In ra 
-            print(df_final[['mã', 'ký hiệu', 'vốn hóa thị trường', 'nhóm vốn hóa']].head())
+            # Tính các hàm trung bình, max, min từ dữ liệu được phân tích
+            df_final['Trung bình'] = df['current_price'].mean()
+            df_final['Max'] = df['current_price'].max()
+            df_final['Vốn hóa thị trường Cao nhất'] = df['market_cap'].max()
+            df_final['Min'] = df['current_price'].min()
 
+        
+            df_final = df_final.sort_values(by='vốn hóa thị trường', ascending=False)
 
+            # Đặt biến (df_save) để in ra dữ liệu cần xem 
+            df_save = df_final[['ký hiệu', 'Tên', 'vốn hóa thị trường']]
+
+            print(df_save)
             # 4. Lưu kết quả ra file CSV (Bước Load trong DE)
             # index=False để không lưu cột số thứ tự mặc định của Pandas
-            df_final.to_csv("ket_qua_phan_tich.csv", index=False, encoding='utf-8-sig')
+            # In ra all thông tin : df_final
+            # In ra những thông tin cần xem --> đặt biến khác (df_save)
+            df_save.to_csv("ket_qua_phan_tich.csv", index=True, encoding='utf-8-sig')
             
             print("\n[SUCCESS] Đã lưu dữ liệu vào file: ket_qua_phan_tich.csv")
 
